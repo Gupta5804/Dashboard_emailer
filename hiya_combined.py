@@ -169,7 +169,17 @@ for i in range(len(four_wk_report_inv)):
                 },ignore_index=True)
     four_wk_report_inv[i] = df_temp   
 sum_recievable_wk = [0,0,0,0]
+df_receivable_probability = pd.DataFrame()
 for j in range(len(four_wk_report_inv)):
+    
+    df_receivable_probability = df_receivable_probability.append({
+        'Week' : "As of " +str(today + timedelta(days=(7*j))),
+        '0% - 25%': four_wk_report_inv[j].Balance[four_wk_report_inv[j].probability == "0% - 25%"].sum(),
+        '25% - 50%': four_wk_report_inv[j].Balance[four_wk_report_inv[j].probability == "25% - 50%"].sum(),
+        '50% - 75%': four_wk_report_inv[j].Balance[four_wk_report_inv[j].probability == "50% - 75%"].sum(),
+        '75% - 100%': four_wk_report_inv[j].Balance[four_wk_report_inv[j].probability == "75% - 100%"].sum(),
+        'max 100%':four_wk_report_inv[j].Balance[four_wk_report_inv[j].probability == "max 100%"].sum(),
+    },ignore_index = True)
     for i in range(len(four_wk_report_inv[j])):
         df_temp = four_wk_report_inv[j]
         sum_recievable_wk[j] = sum_recievable_wk[j] + df_temp.iloc[i]['Balance']
@@ -191,7 +201,8 @@ for j in range(len(four_wk_report_inv)):
 
     url = py.plot(figure,filename = "hiya_recievable_wk_" + str(j+1))
     print(url)
-    
+
+df_receivable_probability = df_receivable_probability.set_index('Week',drop = True)
 
 result1 = pd.concat(four_wk_report_inv, keys=['as of '+str(first_day),'as of '+str(first_day+week), 'as of '+str(first_day+(week+week)),'as of '+str(first_day+(week+week+week))],axis=1)
 print(sum_recievable_wk)
@@ -322,7 +333,16 @@ for i in range(len(four_wk_report_bi)):
     four_wk_report_bi[i] = df_temp   
 
 sum_payable_wk = [0,0,0,0]
+df_payable_probability = pd.DataFrame()
 for j in range(len(four_wk_report_bi)):
+    df_payable_probability = df_payable_probability.append({
+        'Week' : "As of " +str(today + timedelta(days=(7*j))),
+        '0% - 25%': four_wk_report_bi[j].Balance[four_wk_report_bi[j].probability == "0% - 25%"].sum(),
+        '25% - 50%': four_wk_report_bi[j].Balance[four_wk_report_bi[j].probability == "25% - 50%"].sum(),
+        '50% - 75%': four_wk_report_bi[j].Balance[four_wk_report_bi[j].probability == "50% - 75%"].sum(),
+        '75% - 100%': four_wk_report_bi[j].Balance[four_wk_report_bi[j].probability == "75% - 100%"].sum(),
+        'max 100%':four_wk_report_bi[j].Balance[four_wk_report_bi[j].probability == "max 100%"].sum(),
+    },ignore_index = True)
     for i in range(len(four_wk_report_bi[j])):
         df_temp = four_wk_report_bi[j]
         sum_payable_wk[j] = sum_payable_wk[j] + df_temp.iloc[i]['Balance']
@@ -343,7 +363,7 @@ for j in range(len(four_wk_report_bi)):
     figure = go.Figure(data=data, layout=layout)
     url = py.plot(figure,filename = "hiya_payable_wk_"+str(j+1))
     print(url)
-
+df_payable_probability = df_payable_probability.set_index('Week',drop = True)
 result2 = pd.concat(four_wk_report_bi, keys=['as of '+str(first_day),'as of '+str(first_day+week), 'as of '+str(first_day+(week+week)),'as of '+str(first_day+(week+week+week))],axis=1)
 print(sum_payable_wk)
 difference = [0,0,0,0]
@@ -413,10 +433,11 @@ body=  """ <p style="text-align: center;"><strong>As Of <span style="color: #ff0
 <p style="text-align: center;"><span style="color: #000000;"><strong><a href = "https://plot.ly/~rishabh.gupta.min15/68/hiya-sales-dashboard/"> Your Dashboard Link </a></strong></span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-"""
+<p style="text-align: center;"><span style="color: #000000;"><strong>RECEIVABLE</strong></span></p><p style="text-align: center;">""" + str(df_receivable_probability.to_html()) +"""</p>"""+"""<p style="text-align: center;"><span style="color: #000000;"><strong>PAYABLE</strong></span></p><p style="text-align: center;">"""+ str(df_payable_probability.to_html())+"""</p>"""
 subject = "Hiya Recievables and Payables"
 send_dataframe('admin@rawble.com',subject,body,result1,result2,figfilename)
 send_dataframe('rishabh.gupta@rawble.com',subject,body,result1,result2,figfilename)
 send_dataframe('kunal@rawble.com',subject,body,result1,result2,figfilename)
 send_dataframe('gupta.rishabh.abcd@gmail.com',subject,body,result1,result2,figfilename)
 send_dataframe('madhur@rawble.com',subject,body,result1,result2,figfilename)
+send_dataframe('ajay@hiyaindia.com',subject,body,result1,result2,figfilename)
