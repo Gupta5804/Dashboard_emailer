@@ -51,7 +51,7 @@ datashape==0.5.4
 decorator==4.3.0
 defusedxml==0.5.0
 distributed==1.22.0
-Django==2.0.6
+Django==2.2.10
 django-allauth==0.36.0
 docker-py==1.10.6
 docker-pycreds==0.2.3
