@@ -189,7 +189,7 @@ python3-openid==3.1.0
 pythonz-bd==1.11.4
 pytz==2018.4
 PyWavelets==0.5.2
-pywin32==221
+pywin32==301
 pywinpty==0.5.4
 PyYAML==3.12
 pyzmq==17.0.0
