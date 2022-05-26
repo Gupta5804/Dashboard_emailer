@@ -244,7 +244,7 @@ toolz==0.9.0
 tornado==5.0.2
 tqdm==4.23.4
 traitlets==4.3.2
-Twisted==17.5.0
+Twisted==22.4.0
 twython==3.7.0
 typing==3.6.4
 unicodecsv==0.14.1
