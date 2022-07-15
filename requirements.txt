@@ -50,7 +50,7 @@ dask==0.18.1
 datashape==0.5.4
 decorator==4.3.0
 defusedxml==0.5.0
-distributed==1.22.0
+distributed==2021.10.0
 Django==2.0.6
 django-allauth==0.36.0
 docker-py==1.10.6
